@@ -31,7 +31,7 @@ export const errorHandler = (
   }
 
   // Mongoose validation error
-  if (err.name === "ValidationError") {
+  if (err.name === "ValidationError" && (err as any).errors) {
     const message = Object.values((err as any).errors)
       .map((val: any) => val.message)
       .join(", ");
@@ -40,7 +40,7 @@ export const errorHandler = (
 
   // Default to 500 server error
   if (!error.statusCode) {
-    error = new InternalServerError("Server Error");
+    error = new InternalServerError("Internal Server Error");
   }
 
   res.status(error.statusCode).json({

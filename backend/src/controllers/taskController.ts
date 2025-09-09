@@ -102,7 +102,10 @@ export class TaskController {
       }
       await taskService.deleteTask(id);
 
-      res.status(204).send();
+      res.status(200).json({
+        success: true,
+        message: "Task deleted successfully"
+      });
     } catch (error) {
       next(error);
     }
